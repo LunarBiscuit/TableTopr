@@ -36,9 +36,9 @@
         typist.type(value).pause().delete();
       });
 
-      watcher = scope.$watch('vm.contributors', function() {
-        angular.forEach(vm.contributors, function(contributor) {
-          typist.type(contributor.login).pause().delete();
+      watcher = scope.$watch('vm.games', function() {
+        angular.forEach(vm.games, function(game) {
+          typist.type(game.name).pause().delete();
         });
       });
 
@@ -48,24 +48,24 @@
     }
 
     /** @ngInject */
-    function MalarkeyController($log, githubContributor) {
+    function MalarkeyController($log, games) {
       var vm = this;
 
-      vm.contributors = [];
+      vm.games = [];
 
       activate();
 
       function activate() {
-        return getContributors().then(function() {
-          $log.info('Activated Contributors View');
+        return getGames().then(function() {
+          $log.info('Activated Games View');
         });
       }
 
-      function getContributors() {
-        return githubContributor.getContributors(10).then(function(data) {
-          vm.contributors = data;
+      function getGames() {
+        return games.gameList(10).then(function(data) {
+          vm.games = data;
 
-          return vm.contributors;
+          return vm.games;
         });
       }
     }
